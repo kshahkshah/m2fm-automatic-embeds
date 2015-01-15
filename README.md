@@ -19,19 +19,24 @@ And then execute:
 In your Mail2FrontMatter YAML configuration enable the plugin by adding it to your preprocessors:
 
 ```yaml
-protocol: imap
-receiver: yourblogemail@yourdomain.com
-senders:  yourpersonal@yourdomain.com
-
 preprocessors:
   - key: 'automatic-embed'
+```
 
-mailman:
-  server: imap.gmail.com
-  port: 993
-  ssl: true
-  username: yourblogemail@yourdomain.com
-  password: yourpassword
+You can provide a whitelist or blacklist for filters as well as providing filters options. Filter options are documented at the auto_html project.
+
+```yaml
+preprocessors:
+  - key: 'automatic-embed'
+    options:
+      white_list:
+        - youtube
+        - soundcloud
+        - vimeo
+      filters:
+        youtube:
+          autoplay: true
+          other_attribute: other_value
 ```
 
 ## Usage

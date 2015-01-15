@@ -1,0 +1,25 @@
+keys_demo:
+  white_list:
+    - youtube
+    - soundcloud
+    - vimeo
+
+white_list_demo:
+  white_list:
+    - youtube
+    - soundcloud
+    - vimeo
+
+black_list_demo:
+  black_list:
+    - vimeo
+
+options_demo:
+  white_list:
+    - youtube
+    - soundcloud
+    - vimeo
+  filters:
+    youtube:
+      autoplay: true
+
