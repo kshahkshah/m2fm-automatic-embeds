@@ -18,6 +18,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'mail2frontmatter', '>= 0.0.4'
+  spec.add_dependency 'auto_html-whistlerbrk', '2.0.0.pre'
 
   spec.add_development_dependency 'byebug'
   spec.add_development_dependency 'bundler', '~> 1.7'
