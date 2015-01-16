@@ -4,6 +4,8 @@ require 'byebug'
 
 module Mail2FrontMatter
   class AutomaticEmbed < PreProcessor
+    require 'nokogiri'
+
     extend AutoHtml
 
     @all_filters = [:youtube, :soundcloud, :link, :ted, :twitter, :vimeo, :google_map, :gist, :flickr]
@@ -23,6 +25,7 @@ module Mail2FrontMatter
     end
 
     def self.run(metadata, body)
+      body = unwrap_links(body)
 
       body = auto_html(body, { filters: @filters, options: @options[:filters] }) { 
         # use options passed to us...
@@ -37,5 +40,20 @@ module Mail2FrontMatter
 
       return metadata, body
     end
+
+    def self.unwrap_links(body)
+      body = Nokogiri::HTML::DocumentFragment.parse(body)
+
+      body.elements.css("a").each do |element|
+        href = element.attributes["href"].value
+
+        if href == element.inner_html
+          element.replace(href)
+        end
+      end
+
+      body
+    end
+
   end
 end

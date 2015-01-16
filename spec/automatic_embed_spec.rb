@@ -1,31 +1,11 @@
 require 'spec_helper'
 require 'byebug'
 
-describe Mail2FrontMatter::Parser, "parsing" do
-
-  let(:soundcloud) { 
-    Mail::Message.new(File.read(File.join(File.dirname(__FILE__), '..', 'fixtures', 'soundcloud-link.eml'))) 
-  }
-  let(:youtube) { 
-    Mail::Message.new(File.read(File.join(File.dirname(__FILE__), '..', 'fixtures', 'youtube-link.eml'))) 
-  }
-  let(:control) { 
-    Mail::Message.new(File.read(File.join(File.dirname(__FILE__), '..', 'fixtures', 'no-links.eml'))) 
-  }
+describe Mail2FrontMatter::AutomaticEmbed, "configuration" do
   let(:config) { 
     test_config = File.join(File.dirname(__FILE__), '..', 'fixtures', 'config.yml')
     config = YAML.load_file(test_config).deep_symbolize_keys!
   }
-
-  it "should identify and transform youtube link" do
-    Mail2FrontMatter::AutomaticEmbed.register
-
-    parser = Mail2FrontMatter::Parser.new(youtube)
-    metadata, body = Mail2FrontMatter::PreProcessor.process(parser.metadata, parser.body)
-
-    body.should match(/embed/)
-
-  end
 
   it "should store filters internally as symbols" do
     Mail2FrontMatter::AutomaticEmbed.register(config[:keys_demo])
@@ -63,6 +43,42 @@ describe Mail2FrontMatter::Parser, "parsing" do
 
     # run it
     Mail2FrontMatter::AutomaticEmbed.run(metadata, body)
+  end
+end
+
+describe Mail2FrontMatter::AutomaticEmbed, "behaviour" do
+
+  let(:soundcloud) { 
+    Mail::Message.new(File.read(File.join(File.dirname(__FILE__), '..', 'fixtures', 'soundcloud-link.eml'))) 
+  }
+  let(:youtube) { 
+    Mail::Message.new(File.read(File.join(File.dirname(__FILE__), '..', 'fixtures', 'youtube-link.eml'))) 
+  }
+  let(:wrapped) { 
+    Mail::Message.new(File.read(File.join(File.dirname(__FILE__), '..', 'fixtures', 'wrapped-links.eml'))) 
+  }
+  let(:control) { 
+    Mail::Message.new(File.read(File.join(File.dirname(__FILE__), '..', 'fixtures', 'no-links.eml'))) 
+  }
+
+  it "should identify and transform youtube link" do
+    Mail2FrontMatter::AutomaticEmbed.register
+
+    parser = Mail2FrontMatter::Parser.new(youtube)
+    metadata, body = Mail2FrontMatter::PreProcessor.process(parser.metadata, parser.body)
+
+    body.should match(/embed/)
+
+  end
+
+  it "should unwrap links without specific names before using filters" do
+    Mail2FrontMatter::AutomaticEmbed.register
+    parser = Mail2FrontMatter::Parser.new(wrapped)
+
+    metadata, body = Mail2FrontMatter::AutomaticEmbed.run(parser.metadata, parser.body)
+
+    body.should_not match(/href/)
+
   end
 
 end
