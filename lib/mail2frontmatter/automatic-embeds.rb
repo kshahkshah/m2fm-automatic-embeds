@@ -42,13 +42,13 @@ module Mail2FrontMatter
     end
 
     def self.unwrap_links(body)
-      body = Nokogiri::HTML::DocumentFragment.parse(body)
+      parsed_body = Nokogiri::HTML::DocumentFragment.parse(body)
 
-      body.elements.css("a").each do |element|
+      parsed_body.elements.css("a").each do |element|
         href = element.attributes["href"].value
 
         if href == element.inner_html
-          element.replace(href)
+          body.gsub!(element.to_s, href)
         end
       end
 
