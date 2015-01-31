@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = 'm2fm-automatic-embed'
-  spec.version       = '0.0.3'
+  spec.version       = '0.0.4'
   spec.authors       = ['Kunal Shah']
   spec.email         = ['me@kunalashah.com']
   spec.summary       = %q{mail2frontmatter plugin to transform links into embed code automatically}
