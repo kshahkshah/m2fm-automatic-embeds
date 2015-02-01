@@ -1,13 +1,13 @@
-# Mail2FrontMatter::AutomaticEmbed
+# Mail2FrontMatter::AutomaticEmbeds
 
-AutomaticEmbed is a [Mail2FrontMatter](https://github.com/whistlerbrk/mail2frontmatter) plugin which generates embed codes for links. This is a thin layer around the [auto_html](https://github.com/whistlerbrk/auto_html) project to generate the necessary HTML.
+AutomaticEmbeds is a [Mail2FrontMatter](https://github.com/whistlerbrk/mail2frontmatter) plugin which generates embed codes for links. This is a thin layer around the [auto_html](https://github.com/whistlerbrk/auto_html) project to generate the necessary HTML.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'm2fm-automatic-embed', require: false
+gem 'm2fm-automatic-embeds', require: false
 ```
 
 And then execute:
@@ -20,14 +20,14 @@ In your Mail2FrontMatter YAML configuration enable the plugin by adding it to yo
 
 ```yaml
 preprocessors:
-  - key: 'automatic-embed'
+  - key: 'automatic-embeds'
 ```
 
 You can provide a whitelist or blacklist for filters as well as providing filters options. Filter options are documented at the auto_html project.
 
 ```yaml
 preprocessors:
-  - key: 'automatic-embed'
+  - key: 'automatic-embeds'
     options:
       white_list:
         - youtube

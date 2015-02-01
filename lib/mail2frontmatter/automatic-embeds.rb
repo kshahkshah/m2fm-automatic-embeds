@@ -1,9 +1,8 @@
 require 'mail2frontmatter'
 require 'auto_html'
-require 'byebug'
 
 module Mail2FrontMatter
-  class AutomaticEmbed < PreProcessor
+  class AutomaticEmbeds < PreProcessor
     require 'nokogiri'
 
     extend AutoHtml
